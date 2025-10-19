@@ -1,0 +1,84 @@
+import { NextRequest } from "next/server";
+import { successResponse, errorResponse } from "@/lib/api-response";
+import { requireRole } from "@/lib/auth";
+import connectDB from "@/lib/db/mongodb";
+import CustomerActivity from "@/models/CustomerActivity";
+import LoyaltyPoint from "@/models/LoyaltyPoint";
+import Order from "@/models/Order";
+import User from "@/models/User";
+
+/**
+ * GET /api/crm/customers/[id]
+ * Get detailed customer profile
+ */
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await requireRole(["admin", "retail_manager"]);
+    await connectDB();
+
+    // Fetch customer info
+    const user = await User.findById(params.id).select(
+      "name email role createdAt"
+    );
+    if (!user) {
+      return errorResponse("Customer not found", 404);
+    }
+
+    // Fetch activity
+    const activity = await CustomerActivity.findOne({ userId: params.id });
+
+    // Fetch loyalty points
+    const loyaltyPoint = await LoyaltyPoint.findOne({ userId: params.id });
+
+    // Fetch recent orders
+    const orders = await Order.find({ userId: params.id })
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .select("orderNumber totalAmount orderStatus createdAt")
+      .lean();
+
+    return successResponse({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+      },
+      activity: {
+        lastLogin: activity?.lastLogin,
+        loginCount: activity?.loginCount || 0,
+        totalOrders: activity?.totalOrders || 0,
+        totalSpent: activity?.totalSpent || 0,
+        lastOrderDate: activity?.lastOrderDate,
+        averageOrderValue: activity?.averageOrderValue || 0,
+        emailEngagement: activity?.emailEngagement || 0,
+        activityStatus: activity?.activityStatus || "new",
+      },
+      loyalty: {
+        points: loyaltyPoint?.points || 0,
+        totalEarned: loyaltyPoint?.totalEarned || 0,
+        totalRedeemed: loyaltyPoint?.totalRedeemed || 0,
+        recentHistory: loyaltyPoint?.history.slice(-5) || [],
+      },
+      recentOrders: orders,
+    });
+  } catch (error: any) {
+    if (
+      error.message?.includes("Unauthorized") ||
+      error.message?.includes("Forbidden")
+    ) {
+      return errorResponse(
+        error.message,
+        error.message.includes("Unauthorized") ? 401 : 403
+      );
+    }
+    return errorResponse(error.message, 500);
+  }
+}
+
+
+

@@ -1,0 +1,79 @@
+import { NextRequest, NextResponse } from "next/server";
+import connectDB from "@/lib/db/mongodb";
+import Banner from "@/models/Banner";
+import { requireAdmin } from "@/lib/cms/validateAdmin";
+import { successResponse, errorResponse } from "@/lib/api-response";
+import { z } from "zod";
+
+// Validation schema
+const UpdateBannerSchema = z.object({
+  title: z.string().optional(),
+  subtitle: z.string().optional(),
+  image: z.string().optional(),
+  link: z.string().optional(),
+  position: z.enum(["hero", "mid", "footer"]).optional(),
+  active: z.boolean().optional(),
+});
+
+// PUT /api/banners/[id] - Update banner (admin only)
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await requireAdmin();
+    await connectDB();
+
+    const { id } = params;
+    const body = await request.json();
+    const data = UpdateBannerSchema.parse(body);
+
+    const banner = await Banner.findByIdAndUpdate(
+      id,
+      { $set: data },
+      { new: true }
+    );
+
+    if (!banner) {
+      return errorResponse("Banner not found", 404);
+    }
+
+    return successResponse(banner, "Banner updated successfully");
+  } catch (error: any) {
+    console.error("Banner PUT error:", error);
+    if (error instanceof z.ZodError) {
+      return errorResponse("Validation error", 400, error.errors);
+    }
+    return errorResponse(error.message || "Failed to update banner", 500);
+  }
+}
+
+// DELETE /api/banners/[id] - Soft delete banner (admin only)
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await requireAdmin();
+    await connectDB();
+
+    const { id } = params;
+
+    const banner = await Banner.findByIdAndUpdate(
+      id,
+      { $set: { active: false } },
+      { new: true }
+    );
+
+    if (!banner) {
+      return errorResponse("Banner not found", 404);
+    }
+
+    return successResponse(null, "Banner deleted successfully");
+  } catch (error: any) {
+    console.error("Banner DELETE error:", error);
+    return errorResponse(error.message || "Failed to delete banner", 500);
+  }
+}
+
+

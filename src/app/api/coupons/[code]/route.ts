@@ -1,0 +1,142 @@
+import { NextRequest } from "next/server";
+import { successResponse, errorResponse } from "@/lib/api-response";
+import { requireRole, requireAuth } from "@/lib/auth";
+import connectDB from "@/lib/db/mongodb";
+import Coupon from "@/models/Coupon";
+import { validateCoupon } from "@/lib/coupons";
+
+/**
+ * GET /api/coupons/[code]
+ * Validate coupon code during checkout
+ */
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { code: string } }
+) {
+  try {
+    const user = await requireAuth();
+    await connectDB();
+
+    const { searchParams } = new URL(request.url);
+    const orderTotal = parseFloat(searchParams.get("orderTotal") || "0");
+
+    if (!orderTotal) {
+      return errorResponse("orderTotal is required", 400);
+    }
+
+    const validation = await validateCoupon(params.code, user.id, orderTotal);
+
+    if (!validation.valid) {
+      return errorResponse(validation.error || "Invalid coupon", 400);
+    }
+
+    return successResponse({
+      valid: true,
+      coupon: {
+        code: validation.coupon.code,
+        discountType: validation.coupon.discountType,
+        discountValue: validation.coupon.discountValue,
+        minPurchase: validation.coupon.minPurchase,
+        maxDiscount: validation.coupon.maxDiscount,
+        expiresAt: validation.coupon.expiresAt,
+      },
+    });
+  } catch (error: any) {
+    if (
+      error.message?.includes("Unauthorized") ||
+      error.message?.includes("Forbidden")
+    ) {
+      return errorResponse(
+        error.message,
+        error.message.includes("Unauthorized") ? 401 : 403
+      );
+    }
+    return errorResponse(error.message, 500);
+  }
+}
+
+/**
+ * PATCH /api/coupons/[code]
+ * Update coupon (admin only)
+ */
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { code: string } }
+) {
+  try {
+    await requireRole(["admin"]);
+    await connectDB();
+
+    const body = await request.json();
+    const coupon = await Coupon.findOne({ code: params.code.toUpperCase() });
+
+    if (!coupon) {
+      return errorResponse("Coupon not found", 404);
+    }
+
+    // Update allowed fields
+    if (body.discountValue !== undefined) coupon.discountValue = body.discountValue;
+    if (body.minPurchase !== undefined) coupon.minPurchase = body.minPurchase;
+    if (body.maxDiscount !== undefined) coupon.maxDiscount = body.maxDiscount;
+    if (body.usageLimit !== undefined) coupon.usageLimit = body.usageLimit;
+    if (body.userUsageLimit !== undefined)
+      coupon.userUsageLimit = body.userUsageLimit;
+    if (body.expiresAt !== undefined)
+      coupon.expiresAt = new Date(body.expiresAt);
+    if (body.isActive !== undefined) coupon.isActive = body.isActive;
+
+    await coupon.save();
+
+    return successResponse(coupon, "Coupon updated successfully");
+  } catch (error: any) {
+    if (
+      error.message?.includes("Unauthorized") ||
+      error.message?.includes("Forbidden")
+    ) {
+      return errorResponse(
+        error.message,
+        error.message.includes("Unauthorized") ? 401 : 403
+      );
+    }
+    return errorResponse(error.message, 500);
+  }
+}
+
+/**
+ * DELETE /api/coupons/[code]
+ * Deactivate coupon (soft delete, admin only)
+ */
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { code: string } }
+) {
+  try {
+    await requireRole(["admin"]);
+    await connectDB();
+
+    const coupon = await Coupon.findOne({ code: params.code.toUpperCase() });
+
+    if (!coupon) {
+      return errorResponse("Coupon not found", 404);
+    }
+
+    coupon.isActive = false;
+    await coupon.save();
+
+    return successResponse(null, "Coupon deactivated successfully");
+  } catch (error: any) {
+    if (
+      error.message?.includes("Unauthorized") ||
+      error.message?.includes("Forbidden")
+    ) {
+      return errorResponse(
+        error.message,
+        error.message.includes("Unauthorized") ? 401 : 403
+      );
+    }
+    return errorResponse(error.message, 500);
+  }
+}
+
+
+

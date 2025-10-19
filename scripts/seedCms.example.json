@@ -1,0 +1,194 @@
+{
+  "homepage": {
+    "slug": "home",
+    "title": "Dokimas Cosmetics Home",
+    "sections": [
+      {
+        "key": "hero",
+        "title": "Natural Beauty from Ethiopia",
+        "subtitle": "Handmade Oils & Skincare",
+        "content": "<p>Discover our range of natural, ethically sourced cosmetics crafted with love in Ethiopia. Each product is made from the finest ingredients to enhance your natural beauty.</p>",
+        "image": "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=1200",
+        "ctaText": "Shop Now",
+        "ctaUrl": "/shop",
+        "active": true
+      },
+      {
+        "key": "about",
+        "title": "About Dokimas",
+        "subtitle": "Our Story",
+        "content": "<p>Dokimas Cosmetics is dedicated to creating premium, natural beauty products using traditional Ethiopian ingredients and modern science. We believe in sustainable beauty that's good for you and the planet.</p><p>Our products are handcrafted with care, using only the finest natural ingredients sourced ethically from local farmers.</p>",
+        "image": "https://images.unsplash.com/photo-1556228852-80f3c80bee6e?w=800",
+        "active": true
+      },
+      {
+        "key": "shop_cta",
+        "title": "Shop Our Collections",
+        "subtitle": "Premium Natural Cosmetics",
+        "content": "<p>Explore our curated collections of facial oils, body care, haircare, and more. Each product is designed to nourish and enhance your natural beauty.</p>",
+        "ctaText": "Browse All Products",
+        "ctaUrl": "/shop",
+        "active": true
+      },
+      {
+        "key": "featured_products",
+        "title": "Featured Products",
+        "subtitle": "Best Sellers",
+        "productsQuery": {
+          "type": "byQuery",
+          "query": { "isFeatured": true },
+          "ids": []
+        },
+        "settings": { "limit": 8 },
+        "active": true
+      },
+      {
+        "key": "blog_highlights",
+        "title": "From Our Blog",
+        "subtitle": "Beauty Tips & Product Education",
+        "content": "<p>Learn how to get the most out of your natural beauty products with our expert guides and tips.</p>",
+        "ctaText": "Read More",
+        "ctaUrl": "/blog",
+        "active": true
+      },
+      {
+        "key": "testimonials",
+        "title": "What Our Customers Say",
+        "subtitle": "Real Reviews from Real People",
+        "content": "<div class='space-y-4'><blockquote class='border-l-4 border-purple-500 pl-4 italic'><p>\"Dokimas facial oil has transformed my skin! It's so nourishing and smells amazing.\"</p><footer class='text-sm font-semibold mt-2'>- Sarah M.</footer></blockquote><blockquote class='border-l-4 border-purple-500 pl-4 italic'><p>\"I love that these products are all-natural and ethically made. Best cosmetics I've ever used!\"</p><footer class='text-sm font-semibold mt-2'>- Abeba T.</footer></blockquote></div>",
+        "active": true
+      },
+      {
+        "key": "promotions",
+        "title": "Limited Time Offer",
+        "subtitle": "New Customer Special",
+        "content": "<p>Get 10% off your first order when you subscribe to our newsletter!</p>",
+        "ctaText": "Subscribe Now",
+        "ctaUrl": "#newsletter",
+        "active": true
+      },
+      {
+        "key": "newsletter_signup",
+        "title": "Join Our Newsletter",
+        "subtitle": "Get Exclusive Offers & Beauty Tips",
+        "content": "<p>Subscribe to receive special promotions, new product launches, and expert beauty advice delivered to your inbox.</p>",
+        "active": true
+      },
+      {
+        "key": "footer",
+        "title": "Dokimas Cosmetics",
+        "content": "<div class='grid grid-cols-1 md:grid-cols-3 gap-8'><div><h3 class='font-semibold mb-2'>Contact</h3><p class='text-sm'>Email: info@dokimas-cosmetics.com</p><p class='text-sm'>Phone: +251 91 234 5678</p></div><div><h3 class='font-semibold mb-2'>Quick Links</h3><ul class='text-sm space-y-1'><li><a href='/shop'>Shop</a></li><li><a href='/blog'>Blog</a></li><li><a href='/about'>About Us</a></li></ul></div><div><h3 class='font-semibold mb-2'>Follow Us</h3><p class='text-sm'>Stay connected on social media</p></div></div>",
+        "active": true
+      }
+    ],
+    "sectionsOrder": [
+      "hero",
+      "about",
+      "shop_cta",
+      "featured_products",
+      "blog_highlights",
+      "testimonials",
+      "promotions",
+      "newsletter_signup",
+      "footer"
+    ],
+    "isPublished": true,
+    "metaTitle": "Dokimas Cosmetics - Natural Beauty Products from Ethiopia",
+    "metaDescription": "Handmade natural cosmetics using traditional Ethiopian ingredients. Facial oils, body care, haircare & more. Ethically sourced, sustainably made."
+  },
+  "banners": [
+    {
+      "title": "Summer Sale",
+      "subtitle": "Up to 30% Off",
+      "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200",
+      "link": "/shop",
+      "position": "hero",
+      "active": true
+    },
+    {
+      "title": "New Arrival: Shea Butter Oil",
+      "subtitle": "Premium Quality",
+      "image": "https://images.unsplash.com/photo-1571875257727-256c39da42af?w=1200",
+      "link": "/products/shea-butter-oil",
+      "position": "mid",
+      "active": true
+    },
+    {
+      "title": "Free Shipping",
+      "subtitle": "On Orders Over 500 ETB",
+      "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1200",
+      "link": "/shop",
+      "position": "footer",
+      "active": true
+    }
+  ],
+  "blogs": [
+    {
+      "title": "How to Use Facial Oil: 5 Tips for Glowing Skin",
+      "slug": "how-to-use-facial-oil-tips",
+      "excerpt": "Discover the best ways to incorporate facial oil into your skincare routine for radiant, healthy-looking skin.",
+      "content": "<h2>Why Use Facial Oil?</h2><p>Facial oils are concentrated sources of nutrients that can transform your skin. Here are 5 expert tips:</p><h3>1. Apply to Damp Skin</h3><p>For best absorption, apply facial oil to slightly damp skin after cleansing.</p><h3>2. Use the Right Amount</h3><p>3-5 drops is usually enough for your entire face.</p><h3>3. Press, Don't Rub</h3><p>Gently press the oil into your skin rather than rubbing vigorously.</p><h3>4. Layer Correctly</h3><p>Apply oil after water-based serums but before heavy creams.</p><h3>5. Mix with Moisturizer</h3><p>You can also mix a drop or two with your regular moisturizer.</p>",
+      "image": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800",
+      "categories": ["product-education", "beauty-tips"],
+      "tags": ["facial-oil", "how-to", "skincare"],
+      "isPublished": true,
+      "featureOnHomepage": true,
+      "metaTitle": "How to Use Facial Oil: 5 Expert Tips | Dokimas Cosmetics",
+      "metaDescription": "Learn the best techniques for using facial oil in your skincare routine with these 5 expert tips for glowing, healthy skin."
+    },
+    {
+      "title": "Top 7 Ingredients to Avoid in Deodorants",
+      "slug": "ingredients-to-avoid-deodorants",
+      "excerpt": "Not all deodorants are created equal. Learn which harmful ingredients to avoid and why natural alternatives are better.",
+      "content": "<h2>Harmful Deodorant Ingredients</h2><p>Many conventional deodorants contain ingredients that may be harmful to your health. Here's what to avoid:</p><ol><li><strong>Aluminum Compounds</strong> - Linked to skin irritation</li><li><strong>Parabens</strong> - Hormone disruptors</li><li><strong>Triclosan</strong> - Antibacterial agent with health concerns</li><li><strong>Phthalates</strong> - Endocrine disruptors</li><li><strong>Propylene Glycol</strong> - Can cause skin irritation</li><li><strong>Artificial Fragrances</strong> - May contain hidden chemicals</li><li><strong>Talc</strong> - Potential contamination concerns</li></ol><h3>The Natural Alternative</h3><p>Dokimas natural deodorants use ingredients like coconut oil, shea butter, and essential oils to keep you fresh without the harmful chemicals.</p>",
+      "image": "https://images.unsplash.com/photo-1617897903246-719242758050?w=800",
+      "categories": ["product-education"],
+      "tags": ["deodorant", "ingredients", "natural-products"],
+      "isPublished": true,
+      "featureOnHomepage": false,
+      "metaTitle": "7 Harmful Deodorant Ingredients to Avoid | Natural Alternatives",
+      "metaDescription": "Discover which ingredients in conventional deodorants you should avoid and why natural deodorants are the healthier choice."
+    },
+    {
+      "title": "Morning Skincare Routine for Dry Skin",
+      "slug": "morning-skincare-routine-dry-skin",
+      "excerpt": "Build the perfect morning skincare routine to keep dry skin hydrated and glowing all day long.",
+      "content": "<h2>The Perfect Morning Routine for Dry Skin</h2><p>If you have dry skin, your morning routine is crucial for maintaining hydration throughout the day.</p><h3>Step 1: Gentle Cleanser</h3><p>Start with a mild, hydrating cleanser that won't strip your skin.</p><h3>Step 2: Hydrating Toner</h3><p>Apply a alcohol-free toner to prep your skin for better absorption.</p><h3>Step 3: Hyaluronic Acid Serum</h3><p>This powerful humectant draws moisture into your skin.</p><h3>Step 4: Facial Oil</h3><p>Lock in hydration with our nourishing facial oil blend.</p><h3>Step 5: Rich Moisturizer</h3><p>Seal everything in with a deeply hydrating cream.</p><h3>Step 6: SPF</h3><p>Never skip sun protection, even on cloudy days!</p>",
+      "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800",
+      "categories": ["routines", "beauty-tips"],
+      "tags": ["skincare-routine", "dry-skin", "morning-routine"],
+      "isPublished": true,
+      "featureOnHomepage": true,
+      "metaTitle": "Morning Skincare Routine for Dry Skin | Step-by-Step Guide",
+      "metaDescription": "Learn how to create the perfect morning skincare routine for dry skin with this easy step-by-step guide using natural products."
+    },
+    {
+      "title": "The Science Behind Shea Butter's Skin Benefits",
+      "slug": "science-shea-butter-skin-benefits",
+      "excerpt": "Explore the research-backed benefits of shea butter and why it's a powerhouse ingredient in natural skincare.",
+      "content": "<h2>What Makes Shea Butter So Special?</h2><p>Shea butter has been used for centuries in Africa for its incredible skin benefits. Modern science confirms what traditional wisdom has always known.</p><h3>Rich in Fatty Acids</h3><p>Shea butter contains stearic and oleic acids which provide deep moisturization.</p><h3>Anti-Inflammatory Properties</h3><p>Studies show shea butter can reduce skin inflammation and redness.</p><h3>Antioxidant Protection</h3><p>Vitamins A and E help protect skin from environmental damage and premature aging.</p><h3>Improved Skin Barrier</h3><p>Regular use strengthens the skin's natural barrier function.</p><h3>Suitable for All Skin Types</h3><p>Non-comedogenic and gentle enough for sensitive skin.</p>",
+      "image": "https://images.unsplash.com/photo-1598662779094-3c0c8c56a561?w=800",
+      "categories": ["product-education", "expert-advice"],
+      "tags": ["shea-butter", "ingredients", "science"],
+      "isPublished": true,
+      "featureOnHomepage": false,
+      "metaTitle": "The Science Behind Shea Butter's Amazing Skin Benefits",
+      "metaDescription": "Discover the research-backed benefits of shea butter and why it's one of nature's best ingredients for healthy, glowing skin."
+    },
+    {
+      "title": "Dokimas Cosmetics Launches New Eco-Friendly Packaging",
+      "slug": "new-eco-friendly-packaging-launch",
+      "excerpt": "We're excited to announce our transition to 100% recyclable and biodegradable packaging across all product lines.",
+      "content": "<h2>Sustainability Commitment</h2><p>At Dokimas Cosmetics, we believe beauty shouldn't come at the cost of our planet. That's why we're thrilled to announce our new eco-friendly packaging initiative.</p><h3>What's Changing?</h3><p>All our products will now come in:</p><ul><li>100% recyclable glass bottles</li><li>Biodegradable labels made from plant-based materials</li><li>Compostable shipping boxes</li><li>Zero plastic packaging materials</li></ul><h3>Our Impact Goal</h3><p>This initiative will eliminate over 10,000 kg of plastic waste annually.</p><h3>Join Us</h3><p>When you choose Dokimas, you're choosing sustainable beauty. Together, we can make a difference.</p>",
+      "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800",
+      "categories": ["brand-news"],
+      "tags": ["sustainability", "packaging", "eco-friendly"],
+      "isPublished": true,
+      "featureOnHomepage": true,
+      "metaTitle": "Dokimas Launches New Eco-Friendly Packaging | Sustainable Beauty",
+      "metaDescription": "Dokimas Cosmetics announces transition to 100% recyclable and biodegradable packaging. Learn about our sustainability commitment."
+    }
+  ]
+}
+
+
