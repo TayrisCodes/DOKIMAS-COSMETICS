@@ -2,16 +2,13 @@
   "crons": [
     {
       "path": "/api/cron/low-stock-check",
-      "schedule": "0 8 * * *",
-      "comment": "Check for low stock items daily"
+      "schedule": "0 8 * * *"
     },
     {
       "path": "/api/cron/notifications-daily",
-      "schedule": "0 9 * * *",
-      "comment": "Send daily notification digests"
+      "schedule": "0 9 * * *"
     }
-  ],
-  "comment": "Free tier allows only 2 cron jobs. Other cron jobs can be triggered manually via API or upgraded plan."
+  ]
 }
 
 
