@@ -10,7 +10,7 @@ import LoyaltyPoint from "@/models/LoyaltyPoint";
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     const user = await requireAuth();
@@ -66,6 +66,7 @@ export async function GET(
     return errorResponse(error.message, 500);
   }
 }
+
 
 
 

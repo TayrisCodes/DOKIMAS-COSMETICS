@@ -18,13 +18,13 @@ const UpdateBannerSchema = z.object({
 // PUT /api/banners/[id] - Update banner (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin();
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const data = UpdateBannerSchema.parse(body);
 
@@ -51,13 +51,13 @@ export async function PUT(
 // DELETE /api/banners/[id] - Soft delete banner (admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin();
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
 
     const banner = await Banner.findByIdAndUpdate(
       id,
@@ -75,5 +75,6 @@ export async function DELETE(
     return errorResponse(error.message || "Failed to delete banner", 500);
   }
 }
+
 
 

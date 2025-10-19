@@ -49,11 +49,12 @@ async function getBlogs(page: number = 1, category?: string, search?: string) {
 export default async function BlogPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
-  const page = parseInt(searchParams.page || "1", 10);
-  const category = searchParams.category;
-  const search = searchParams.search;
+  const sp = await searchParams;
+  const page = parseInt(sp.page || "1", 10);
+  const category = sp.category;
+  const search = sp.search;
 
   const { posts, meta } = await getBlogs(page, category, search);
 
@@ -127,5 +128,6 @@ export default async function BlogPage({
     </div>
   );
 }
+
 
 

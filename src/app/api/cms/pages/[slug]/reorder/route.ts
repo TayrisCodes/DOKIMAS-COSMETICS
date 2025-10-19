@@ -13,13 +13,13 @@ const ReorderSchema = z.object({
 // PATCH /api/cms/pages/[slug]/reorder - Reorder sections (admin only)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await requireAdmin();
     await connectDB();
 
-    const { slug } = params;
+    const { slug } = await params;
     const body = await request.json();
     const { sectionsOrder } = ReorderSchema.parse(body);
 
@@ -42,5 +42,6 @@ export async function PATCH(
     return errorResponse(error.message || "Failed to reorder sections", 500);
   }
 }
+
 
 

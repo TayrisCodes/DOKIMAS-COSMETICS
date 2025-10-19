@@ -14,7 +14,7 @@ import {
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
   try {
     const user = await requireAuth();
@@ -55,6 +55,7 @@ export async function POST(
     return errorResponse(error.message, 500);
   }
 }
+
 
 
 

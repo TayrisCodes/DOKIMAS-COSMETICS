@@ -24,7 +24,7 @@ const CATEGORIES = [
   "brand-news",
 ];
 
-export default function BlogEditor({ params }: { params: { slug: string } }) {
+export default function BlogEditor({ params }: { params: Promise<{ slug: string }> }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -415,5 +415,6 @@ export default function BlogEditor({ params }: { params: { slug: string } }) {
     </div>
   );
 }
+
 
 

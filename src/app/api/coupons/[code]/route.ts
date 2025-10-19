@@ -11,7 +11,7 @@ import { validateCoupon } from "@/lib/coupons";
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
   try {
     const user = await requireAuth();
@@ -61,7 +61,7 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
   try {
     await requireRole(["admin"]);
@@ -108,7 +108,7 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
   try {
     await requireRole(["admin"]);
@@ -137,6 +137,7 @@ export async function DELETE(
     return errorResponse(error.message, 500);
   }
 }
+
 
 
 

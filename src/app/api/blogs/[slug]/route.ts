@@ -25,11 +25,11 @@ const UpdateBlogSchema = z.object({
 // GET /api/blogs/[slug] - Fetch single blog (public)
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await connectDB();
-    const { slug } = params;
+    const { slug } = await params;
 
     const blog = await Blog.findOne({ slug, isPublished: true })
       .populate("author", "name email")
@@ -49,13 +49,13 @@ export async function GET(
 // PUT /api/blogs/[slug] - Update blog (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await requireAdmin();
     await connectDB();
 
-    const { slug } = params;
+    const { slug } = await params;
     const body = await request.json();
     const data = UpdateBlogSchema.parse(body);
 
@@ -104,13 +104,13 @@ export async function PUT(
 // DELETE /api/blogs/[slug] - Soft delete blog (admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await requireAdmin();
     await connectDB();
 
-    const { slug } = params;
+    const { slug } = await params;
 
     const blog = await Blog.findOneAndUpdate(
       { slug },
@@ -128,5 +128,6 @@ export async function DELETE(
     return errorResponse(error.message || "Failed to delete blog", 500);
   }
 }
+
 
 

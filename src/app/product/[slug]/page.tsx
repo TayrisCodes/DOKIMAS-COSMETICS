@@ -42,7 +42,7 @@ async function getRelatedProducts(category: string, currentSlug: string) {
   }
 }
 
-export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
+export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const product = await getProduct(params.slug);
 
   if (!product) {

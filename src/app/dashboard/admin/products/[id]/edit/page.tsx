@@ -21,7 +21,7 @@ async function getProduct(id: string) {
   }
 }
 
-export default async function EditProductPage({ params }: { params: { id: string } }) {
+export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
 
   if (!session || session.user.role !== "admin") {
@@ -36,6 +36,7 @@ export default async function EditProductPage({ params }: { params: { id: string
 
   return <ProductForm product={product} isEdit={true} />;
 }
+
 
 
 

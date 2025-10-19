@@ -60,7 +60,12 @@ async function getProductsData(searchParams: Promise<Record<string, string | und
     }
     
     const data = await response.json();
-    return data;
+    return {
+      products: data.data || [],
+      total: data.pagination?.total || 0,
+      page: data.pagination?.page || 1,
+      totalPages: data.pagination?.totalPages || 1
+    };
   } catch (error) {
     console.error("Error fetching products:", error);
     return { products: [], total: 0, page: 1, totalPages: 1 };
