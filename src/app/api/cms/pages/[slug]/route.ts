@@ -19,11 +19,11 @@ const UpdatePageSchema = z.object({
 // GET /api/cms/pages/[slug] - Fetch page by slug (public)
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await connectDB();
-    const { slug } = params;
+    const { slug } = await params;
 
     const page = await CMSPage.findOne({ slug }).lean();
     if (!page) {
@@ -85,13 +85,13 @@ export async function GET(
 // PUT /api/cms/pages/[slug] - Update page (admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await requireAdmin();
     await connectDB();
 
-    const { slug } = params;
+    const { slug } = await params;
     const body = await request.json();
     const data = UpdatePageSchema.parse(body);
 
@@ -114,13 +114,13 @@ export async function PUT(
 // DELETE /api/cms/pages/[slug] - Delete page (admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await requireAdmin();
     await connectDB();
 
-    const { slug } = params;
+    const { slug } = await params;
 
     // Prevent deleting the home page
     if (slug === "home") {
@@ -138,5 +138,6 @@ export async function DELETE(
     return errorResponse(error.message || "Failed to delete page", 500);
   }
 }
+
 
 

@@ -32,21 +32,22 @@ const SORT_OPTIONS = [
   { value: "-averageRating", label: "Highest Rated" },
 ];
 
-async function getProductsData(searchParams: any) {
+async function getProductsData(searchParams: Promise<Record<string, string | undefined>>) {
   try {
+    const sp = await searchParams;
     const params = new URLSearchParams();
     
-    if (searchParams.category && searchParams.category !== 'All') {
-      params.append('category', searchParams.category);
+    if (sp.category && sp.category !== 'All') {
+      params.append('category', sp.category);
     }
-    if (searchParams.search) {
-      params.append('search', searchParams.search);
+    if (sp.search) {
+      params.append('search', sp.search);
     }
-    if (searchParams.sort) {
-      params.append('sort', searchParams.sort);
+    if (sp.sort) {
+      params.append('sort', sp.sort);
     }
-    if (searchParams.page) {
-      params.append('page', searchParams.page);
+    if (sp.page) {
+      params.append('page', sp.page);
     }
     params.append('limit', '12');
 
@@ -179,7 +180,15 @@ function ProductGridSkeleton() {
   );
 }
 
-export default async function ShopPage({ searchParams }: { searchParams: any }) {
+export default async function ShopPage({ searchParams }: {
+  searchParams: Promise<{
+    category?: string;
+    search?: string;
+    sort?: string;
+    page?: string;
+  }>
+}) {
+  const sp = await searchParams;
   const { products, total, page, totalPages } = await getProductsData(searchParams);
 
   return (
@@ -208,14 +217,14 @@ export default async function ShopPage({ searchParams }: { searchParams: any }) 
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
                   placeholder="Search products..."
-                  defaultValue={searchParams.search || ""}
+                  defaultValue={sp.search || ""}
                   className="pl-10"
                 />
               </div>
             </div>
             <div>
               <label className="text-sm font-medium mb-2 block">Category</label>
-              <Select defaultValue={searchParams.category || "All"}>
+              <Select defaultValue={sp.category || "All"}>
                 <SelectTrigger>
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
@@ -230,7 +239,7 @@ export default async function ShopPage({ searchParams }: { searchParams: any }) 
             </div>
             <div>
               <label className="text-sm font-medium mb-2 block">Sort By</label>
-              <Select defaultValue={searchParams.sort || "-createdAt"}>
+              <Select defaultValue={sp.sort || "-createdAt"}>
                 <SelectTrigger>
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
