@@ -14,10 +14,23 @@ const vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
 const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
 const vapidContact = process.env.VAPID_CONTACT || 'mailto:admin@dokimas.com';
 
-if (!vapidPublicKey || !vapidPrivateKey) {
-  console.warn('⚠️ VAPID keys not configured. Push notifications will not work.');
-} else {
-  webpush.setVapidDetails(vapidContact, vapidPublicKey, vapidPrivateKey);
+// Only initialize during runtime, not during build
+let isVapidInitialized = false;
+
+function initializeVapid() {
+  if (isVapidInitialized) return;
+  
+  if (!vapidPublicKey || !vapidPrivateKey) {
+    console.warn('⚠️ VAPID keys not configured. Push notifications will not work.');
+    return;
+  }
+
+  try {
+    webpush.setVapidDetails(vapidContact, vapidPublicKey, vapidPrivateKey);
+    isVapidInitialized = true;
+  } catch (error) {
+    console.error('Failed to initialize VAPID:', error);
+  }
 }
 
 export interface PushPayload {
@@ -56,6 +69,9 @@ export async function sendPushNotification(
   payload: PushPayload
 ): Promise<boolean> {
   try {
+    // Initialize VAPID if not already done
+    initializeVapid();
+    
     const pushSubscription = {
       endpoint: subscription.endpoint,
       keys: {
