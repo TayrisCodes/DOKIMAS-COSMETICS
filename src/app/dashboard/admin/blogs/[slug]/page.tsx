@@ -1,3 +1,4 @@
+import { use } from "react";
 "use client";
 
 import { useEffect, useState } from "react";
@@ -44,19 +45,20 @@ export default function BlogEditor({ params }: { params: Promise<{ slug: string 
   });
   const [tagInput, setTagInput] = useState("");
 
-  const isNew = params.slug === "new";
+  const isNew = resolvedParams.slug === "new";
 
+  const resolvedParams = use(params);
   useEffect(() => {
     if (!isNew) {
       fetchBlog();
     } else {
       setLoading(false);
     }
-  }, [params.slug]);
+  }, [resolvedParams.slug]);
 
   const fetchBlog = async () => {
     try {
-      const response = await fetch(`/api/blogs/${params.slug}`);
+      const response = await fetch(`/api/blogs/${resolvedParams.slug}`);
       const data = await response.json();
 
       if (response.ok) {
@@ -106,7 +108,7 @@ export default function BlogEditor({ params }: { params: Promise<{ slug: string 
         tags: formData.tags.filter((t) => t.trim()),
       };
 
-      const url = isNew ? "/api/blogs" : `/api/blogs/${params.slug}`;
+      const url = isNew ? "/api/blogs" : `/api/blogs/${resolvedParams.slug}`;
       const method = isNew ? "POST" : "PUT";
 
       const response = await fetch(url, {

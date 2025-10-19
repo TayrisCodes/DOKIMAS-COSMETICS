@@ -14,12 +14,13 @@ export async function GET(
 ) {
   try {
     await connectDB();
+    const { id } = await params;
 
     // Try to find by ID first, then by slug
-    let product = await Product.findById(params.id);
+    let product = await Product.findById(id);
     
     if (!product) {
-      product = await Product.findOne({ slug: params.id, isActive: true });
+      product = await Product.findOne({ slug: id, isActive: true });
     }
 
     if (!product) {
@@ -47,11 +48,12 @@ export async function PUT(
   try {
     await requireRole("admin");
     await connectDB();
+    const { id } = await params;
 
     const body = await request.json();
 
     // Check if product exists
-    const product = await Product.findById(params.id);
+    const product = await Product.findById(id);
 
     if (!product) {
       return errorResponse("Product not found", 404);
@@ -84,8 +86,9 @@ export async function DELETE(
   try {
     await requireRole("admin");
     await connectDB();
+    const { id } = await params;
 
-    const product = await Product.findById(params.id);
+    const product = await Product.findById(id);
 
     if (!product) {
       return errorResponse("Product not found", 404);
